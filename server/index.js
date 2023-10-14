@@ -8,6 +8,9 @@ const io = new SocketServer(server)
 
 io.on('connection', socket => {
   console.log('Client connected');
+  socket.on('message', data => {
+    console.log(data);
+  })
 })
 
 const PORT = 4000
