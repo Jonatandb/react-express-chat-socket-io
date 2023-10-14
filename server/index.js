@@ -7,11 +7,14 @@ const server = http.createServer(app)
 const io = new SocketServer(server)
 
 io.on('connection', socket => {
-  console.log('Client connected');
+  console.log('Client connected - Id: ' + socket.id);
 
-  socket.on('message', data => {
-    console.log(data);
-    socket.broadcast.emit('message', data)
+  socket.on('message', body => {
+    console.log(body);
+    socket.broadcast.emit('message', {
+      body,
+      id: socket.id.slice(0, 6)
+    })
   })
 })
 

@@ -9,7 +9,11 @@ function App() {
 
   const handleSubmit = e => {
     e.preventDefault()
-    receiveMessage(message)
+    const newMessage = {
+      body: message,
+      id: 'Me'
+    }
+    receiveMessage(newMessage)
     socket.emit('message', message)
   }
 
@@ -35,7 +39,7 @@ function App() {
 
       <ul>
         {
-          messages.map((msg, idx) => <li key={idx}>{msg}</li>)
+          messages.map((msg, idx) => <li key={idx}>{msg.id}: {msg.body}</li>)
         }
       </ul>
 
