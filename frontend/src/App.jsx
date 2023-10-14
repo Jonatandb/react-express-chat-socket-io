@@ -1,15 +1,25 @@
 import io from 'socket.io-client'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 const socket = io('/')
 
 function App() {
   const [message, setMessage] = useState('')
+  const [messages, setMessages] = useState([])
 
   const handleSubmit = e => {
     e.preventDefault()
+    receiveMessage(message)
     socket.emit('message', message)
   }
+
+  useEffect(() => {
+    socket.on('message', receiveMessage)
+    return () => socket.off('message', receiveMessage)
+  }, [messages])
+
+  const receiveMessage = message =>
+    setMessages(previousState => [...previousState, message])
 
   return (
     <div>
@@ -22,9 +32,22 @@ function App() {
         />
         <button>Send</button>
       </form>
+
+      <ul>
+        {
+          messages.map((msg, idx) => <li key={idx}>{msg}</li>)
+        }
+      </ul>
+
     </div>
   )
 }
 
 export default App
+
+
+
+
+
+
 
