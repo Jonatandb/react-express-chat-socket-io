@@ -27,7 +27,7 @@ function App() {
 
   return (
     <div>
-      <form onSubmit={handleSubmit}>
+      <form  onSubmit={handleSubmit}>
         <input
           type='text'
           placeholder='Write your messange...'
@@ -48,6 +48,7 @@ function App() {
 }
 
 export default App
+
 
 
 
