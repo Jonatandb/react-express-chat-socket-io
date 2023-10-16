@@ -10,10 +10,9 @@ io.on('connection', socket => {
   console.log('Client connected - Id: ' + socket.id)
 
   socket.on('message', body => {
-    console.log(body)
     socket.broadcast.emit('message', {
       body,
-      id: socket.id.slice(0, 6)
+      from: socket.id.slice(0, 6)
     })
   })
 })

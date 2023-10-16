@@ -11,7 +11,7 @@ function App() {
     e.preventDefault()
     const newMessage = {
       body: message,
-      id: 'Me'
+      from: 'Me',
     }
     receiveMessage(newMessage)
     socket.emit('message', message)
@@ -26,33 +26,33 @@ function App() {
     setMessages(previousState => [...previousState, message])
 
   return (
-    <div>
-      <form  onSubmit={handleSubmit}>
+    <div className='h-screen bg-zinc-800 text-white flex items-center justify-center'>
+      <form onSubmit={handleSubmit} className='bg-zinc-900 p-10'>
+        <h1 className='text-2xl font-bold my-2'>Chat React</h1>
         <input
           type='text'
           placeholder='Write your messange...'
           onChange={e => setMessage(e.target.value)}
           value={message}
+          className='border-2 border-zinc-500 p-2 w-full text-black'
         />
-        <button>Send</button>
+        <ul>
+          {messages.map((message, idx) => (
+            <li
+              key={idx}
+              className={`my-2 p-2 table rounded-md ${
+                message.from === 'Me' ? 'bg-sky-700' : 'bg-black ml-auto'
+              }`}
+            >
+              <span className="text-xs text-slate-300 block">{message.from}</span>
+              <span className="text-md">{message.body}</span>
+            </li>
+          ))}
+        </ul>
       </form>
-
-      <ul>
-        {
-          messages.map((msg, idx) => <li key={idx}>{msg.id}: {msg.body}</li>)
-        }
-      </ul>
-
     </div>
   )
 }
 
 export default App
-
-
-
-
-
-
-
 
